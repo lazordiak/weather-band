@@ -35,6 +35,7 @@ const SmallDot = styled.span`
   width: 11px;
   margin: 5px 0;
   background-color: ${props => props.isActive ? "#C4C4C4" : "#FBF7EF"};
+  transition: background-color .5s;
   border: 2px solid #C4C4C4;
   border-radius: 50%;
   display: inline-block;
