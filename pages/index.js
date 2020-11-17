@@ -141,10 +141,14 @@ const Snapper = styled.section`
 
 const FauxSnapper = styled.section`
   scroll-snap-align: ${props => props.snapAlign ? props.snapAlign : "start"};
-  height: 85%;
+  height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
 `
 
 const Header1 = styled.h1`
@@ -290,6 +294,7 @@ export default function Home() {
         </PicHolder>
         <MainHolder>
           <MainText id={"textHolder"} ref={holder}>
+            <FauxSnapper></FauxSnapper>
             <Snapper id={"intro"} ref={intro}>
               <Header1>ITP WEATHER BAND</Header1>
               <ProjText>
