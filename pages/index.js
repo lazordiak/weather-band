@@ -17,9 +17,18 @@ const Title = styled.span`
   font-weight: 200;
   font-size: 18px;
   color: #262626;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    max-width: 20%;
+    margin-left: 5%;
+  }
 `
 
 const DotHolder = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const Dot = styled.span`
@@ -35,7 +44,7 @@ const SmallDot = styled.span`
   width: 11px;
   margin: 5px 0;
   background-color: ${props => props.isActive ? "#C4C4C4" : "#FBF7EF"};
-  transition: background-color .5s;
+  transition: background-color .25s;
   border: 2px solid #C4C4C4;
   border-radius: 50%;
   display: inline-block;
@@ -69,6 +78,30 @@ const MainHolder = styled.div`
   /*display: flex;
   align-items: center;*/
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    width: 80%;
+    font-size: 12px;
+  }
+`
+
+const PicHolder = styled.div`
+  width: 45%;
+  height: 100%;
+  display: flex;
+  /*display: flex;
+  align-items: center;*/
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    position: absolute;
+    opacity: ${props => props.opacity ? props.opacity : 1};
+    z-index: -1;
+    top: 20%;
+    left: 0;
+    height: 70%;
+    width: 100%;
+  }
 `
 
 const ScrollLine = styled.div`
@@ -78,6 +111,10 @@ const ScrollLine = styled.div`
   position: relative;
   bottom: 0;
   left: 50%;
+
+  @media (max-width: 764px) {
+    height: 15px;
+  }
 `
 
 const MainText = styled.div`
@@ -86,6 +123,12 @@ const MainText = styled.div`
   margin-left: 10%;
   overflow: auto; /*..will introduce scroll bar when needed..*/
   scroll-snap-type: y mandatory;
+
+  @media (max-width: 768px) {
+    margin: 0;
+    width: 100%;
+    font-size: 14px;
+  }
 `
 
 const Snapper = styled.section`
@@ -111,6 +154,10 @@ const Header1 = styled.h1`
   font-weight: 600;
   font-size: 18px;
   color: #787475;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `
 
 const ButtonHolder = styled.div`
@@ -123,6 +170,10 @@ const ButtonHolder = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const ProjText = styled.p`
@@ -234,9 +285,9 @@ export default function Home() {
 
       <main className={styles.main}>
 
-        <MainHolder>
+        <PicHolder>
           Hewfin picture
-        </MainHolder>
+        </PicHolder>
         <MainHolder>
           <MainText id={"textHolder"} ref={holder}>
             <Snapper id={"intro"} ref={intro}>
