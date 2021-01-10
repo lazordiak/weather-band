@@ -3,6 +3,48 @@ import styles from '../styles/Home.module.css'
 import styled from "styled-components"
 import { useRef, useState, useEffect } from 'react'
 
+const HomeContainer = styled.div`
+  min-height: 100vh;
+  /*padding: 0 0.5rem;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #262626;
+  transition: all 0.5s ease;
+
+  ${props => props.season == "winter" && ({
+    backgroundColor: props.inView == "intro" ? "#8695c0" : "#ebebec",
+    color: props.inView == "intro" ? "#e1e2e9" : "#474748"
+  })}
+
+${props => props.season == "summer" && ({
+    backgroundColor: props.inView == "intro" ? "#d39e8e" : "#f1eae8",
+    color: props.inView == "intro" ? "#eee6e3" : "#393737"
+  })}
+
+${props => props.season == "autumn" && ({
+    backgroundColor: props.inView == "intro" ? "#cda05b" : "#f5f1e9",
+    color: props.inView == "intro" ? "#efece7" : "#2b2b2b"
+  })}
+
+${props => props.season == "spring" && ({
+    backgroundColor: props.inView == "intro" ? "#929d82" : "#ebede9",
+    color: props.inView == "intro" ? "#e2e3df" : "#2e2e2e"
+  })}
+`
+
+const RestColorHolder = styled.div`
+
+  height: 100%;
+  width: 100%;
+
+  ${props => props.season == "winter" && ({
+    backgroundColor: "#ebebec",
+    color: "#494949"
+  })}
+`
+
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
@@ -43,7 +85,7 @@ const SmallDot = styled.span`
   height: 11px;
   width: 11px;
   margin: 5px 0;
-  background-color: ${props => props.isActive ? "#C4C4C4" : "#FBF7EF"};
+  background-color: ${props => props.isActive ? "#C4C4C4": null};
   transition: background-color .25s;
   border: 2px solid #C4C4C4;
   border-radius: 50%;
@@ -66,7 +108,7 @@ const Footer = styled.div`
   opacity: ${props => props.visible == "intro" ? 1 : 0};
   transition: opacity 1s;
   font-size: 14px;
-  color: #8B8688;
+  //color: #8B8688;
   display: flex;
   flex-direction: column;
 `
@@ -105,7 +147,7 @@ const PicHolder = styled.div`
 `
 
 const ScrollLine = styled.div`
-  border-left: 2px solid #8B8688;
+  border-left: 2px solid;
   margin-top: 10px;
   height: 20px;
   position: relative;
@@ -157,7 +199,7 @@ const Header1 = styled.h1`
   font-family: 'Libre Franklin', sans-serif;
   font-weight: 600;
   font-size: 18px;
-  color: #787475;
+  //color: #787475;
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -181,7 +223,6 @@ const ButtonHolder = styled.div`
 `
 
 const ProjText = styled.p`
-  color: #262626;
   font-family: 'Libre Franklin', sans-serif;
 `
 
@@ -216,8 +257,11 @@ const AnchorLink = ({itemName, active, intersection}) => {
     </DotLink>
   )
 }
-
+/*
+--------------------------------------------------------------------------
 // Hook
+--------------------------------------------------------------------------
+*/
 function useOnScreen(refs, options) {
   // State and setter for storing whether element is visible
   const [isIntersecting, setIntersecting] = useState(false);
@@ -241,8 +285,43 @@ function useOnScreen(refs, options) {
     };
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
+  console.log(isIntersecting);
+
   return isIntersecting;
 }
+
+/*
+----------------------------------------------------------------------
+//Date
+----------------------------------------------------------------------
+*/
+
+let date = new Date();
+const month = date.getMonth();
+
+const seasoner = (month) => {
+  let season = null;
+  if (month < 2) {
+    season = "winter";
+  } else if (month < 5) {
+    season = "spring";
+  } else if (month < 8) {
+    season = "summer"; 
+  } else if (month < 11) {
+    season = "autumn";
+  } else {
+    season = "winter";
+  }
+  return season;
+}
+
+const season = seasoner(month);
+
+/*
+----------------------------------------------------------------------
+//Component export
+----------------------------------------------------------------------
+*/
 
 export default function Home() {
 
@@ -265,8 +344,9 @@ export default function Home() {
   const intersection = useOnScreen(theRefs,options)
 
   return (
-    <div className={styles.container}>
+    <HomeContainer season={season} inView={intersection}>
 
+      
       <Header>
         <Title>ITP WEATHER BAND</Title>
         <DotHolder>
@@ -364,7 +444,8 @@ export default function Home() {
         <ScrollLine />
       </Footer>
 
-    </ div>
+
+    </ HomeContainer>
   )
 }
 
