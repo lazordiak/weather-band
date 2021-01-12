@@ -11,7 +11,7 @@ const HomeContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: #262626;
-  transition: all 0.5s ease;
+  transition: all 1.0s ease;
 
   ${props => props.season == "winter" && ({
     backgroundColor: props.inView == "intro" ? "#8695c0" : "#ebebec",
@@ -34,17 +34,6 @@ ${props => props.season == "spring" && ({
   })}
 `
 
-const RestColorHolder = styled.div`
-
-  height: 100%;
-  width: 100%;
-
-  ${props => props.season == "winter" && ({
-    backgroundColor: "#ebebec",
-    color: "#494949"
-  })}
-`
-
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
@@ -59,6 +48,8 @@ const Title = styled.span`
   font-weight: 200;
   font-size: 18px;
   color: #262626;
+  opacity: ${props => props.inView == "intro" ? 0 : 1};
+  transition: all 1.0s ease;
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -106,7 +97,7 @@ const Footer = styled.div`
   position: absolute;
   bottom: 0%;
   opacity: ${props => props.visible == "intro" ? 1 : 0};
-  transition: opacity 1s;
+  transition: opacity 1s ease;
   font-size: 14px;
   //color: #8B8688;
   display: flex;
@@ -348,7 +339,7 @@ export default function Home() {
 
       
       <Header>
-        <Title>ITP WEATHER BAND</Title>
+        <Title inView={intersection}>ITP WEATHER BAND</Title>
         <DotHolder>
           <DotLink href="https://soundcloud.com/itp-weather-band">
             <Dot />
