@@ -1,7 +1,11 @@
 import Head from 'next/head'
+import dynamic from "next/dynamic";
 import styles from '../styles/Home.module.css'
 import styled from "styled-components"
 import { useRef, useState, useEffect } from 'react'
+import { setup, draw } from "./sketch2"
+import { useMeasure } from "react-use";
+const Sketch = dynamic(() => import("react-p5"), { ssr: false });
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -119,8 +123,8 @@ const MainHolder = styled.div`
 `
 
 const PicHolder = styled.div`
-  width: 45%;
-  height: 100%;
+  width: 500px;
+  height: 600px;
   display: flex;
   /*display: flex;
   align-items: center;*/
@@ -132,8 +136,8 @@ const PicHolder = styled.div`
     z-index: -1;
     top: 20%;
     left: 0;
-    height: 70%;
-    width: 100%;
+    height: 500px;
+    width: 500px;
   }
 `
 
@@ -236,8 +240,6 @@ const AnchorLink = ({itemName, active, intersection}) => {
     anchorTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  //console.log(intersecting);
-
   return(
     <DotLink 
       href={`#${itemName}`}
@@ -276,8 +278,6 @@ function useOnScreen(refs, options) {
     };
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
-  console.log(isIntersecting);
-
   return isIntersecting;
 }
 
@@ -314,6 +314,12 @@ const season = seasoner(month);
 ----------------------------------------------------------------------
 */
 
+//create your forceUpdate hook
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue(value => value + 1); // update the state to force render
+}
+
 export default function Home() {
 
   //set ref to scroll to
@@ -332,9 +338,17 @@ export default function Home() {
     threshold: 0.55
   }
 
-  const intersection = useOnScreen(theRefs,options)
+  const intersection = useOnScreen(theRefs,options);
+
+  const [canvasRef, {width, height}] = useMeasure();
+  let measures = {width: width, height: height};
+  var boundSetup = setup.bind(null,measures);
+  console.log("width, height: ",width,height);
+  /*console.log("measures object",measures.width,measures.height);
+  console.log("bound stuff",boundSetup);*/
 
   return (
+    
     <HomeContainer season={season} inView={intersection}>
 
       
@@ -360,8 +374,8 @@ export default function Home() {
 
       <main className={styles.main}>
 
-        <PicHolder>
-          Hewfin picture
+        <PicHolder style={{minWidth:"45%",maxWidth:"45%",minHeight:"75vh"}} ref={canvasRef}>
+          <Sketch setup={boundSetup} draw={draw}/>
         </PicHolder>
         <MainHolder>
           <MainText id={"textHolder"} ref={holder}>
@@ -389,7 +403,7 @@ export default function Home() {
               <Header1>OTHER PROJECTS</Header1>
               <ProjText>Here's one project</ProjText>
               <ProjText>Here's another project</ProjText>
-              <ProjText>Here's weather journals, the best project ever</ProjText>
+              <ProjText>Here's a third</ProjText>
               <Header1>BEHIND THE STAGE</Header1>
               <ProjText>Project Github: https://github.com/ITPNYU/WeatherBand</ProjText>
             </Snapper>
@@ -406,7 +420,7 @@ export default function Home() {
                   Music Producer: Jesse Simpson
                 </Credits>
                 <Credits>
-                  Performers: Arnab Chakravarty, Sid Chou, Schuyler W DeVos, Atchareeya Jattuporn (Name), Chun Song, Nuntinee Tansrisakul, Yiting Liu
+                  Performers: Arnab Chakravarty, Sid Chou, Schuyler deVos, Atchareeya Jattuporn (Name), Chun Song, Nuntinee Tansrisakul, Yiting Liu
                 </Credits>
                 <Credits>
                   Tech Support: Brent Bailey, Arnab Chakravarty, Yeseul Song, Tom Igoe
@@ -415,7 +429,7 @@ export default function Home() {
                   Website Design and Development: Schuyler deVos, Yichan Wang
                 </Credits>
                 <p>
-                Thanks to: this will be updated
+                Thanks to: you, for visiting!
                 </p>
               </ProjText>
             </Snapper>
