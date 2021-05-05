@@ -1,10 +1,10 @@
 import { Bezier } from "./bezier"
 
-const setup = (measures,p, canvasParentRef) => {
+const setup = (measures,p,canvasParentRef) => {
 
 
-  console.log(measures);
-  console.log(p,canvasParentRef);
+  //console.log(measures);
+  //console.log(p,canvasParentRef);
 
   let xOff;
   let xTracker;
@@ -18,16 +18,48 @@ const setup = (measures,p, canvasParentRef) => {
   let lastBitPoints;
   let topPartPoints;
 
+  let widthU;
+  let heightU;
+
+  let date = new Date();   
+  const month = date.getMonth(); 
+
+const seasoner = (month) => {
+    let season = null;
+    if (month < 2) {
+        season = "winter";
+    } else if (month < 5) {
+        season = "spring";
+    } else if (month < 8) {
+        season = "summer"; 
+    } else if (month < 11) {
+        season = "autumn";
+    } else {
+        season = "winter";
+    }
+    return season;
+}
+
+const season = seasoner(month);
+let seasonColor;
+
+if (season == "winter") {
+    seasonColor = "#ebebec";
+} else if (season == "summer") {
+    seasonColor = "#f1eae8";
+} else if (season == "autumn") {
+    seasonColor = "f5f1e9";
+} else {
+    seasonColor = "#ebede9";
+}
+
   const CalculateMidpoint = (start,end) => {
       return start + (end-start)/2;
   }
 
-  /*console.log("height: ",parentHeight);
-  console.log("width: ",parentWidth);
-  console.log(canvasParentRef);*/
 
   let canvas = p.createCanvas(measures.width, measures.height).parent(canvasParentRef);
-      p.background(251,247,239);
+      //p.background(seasonColor);
 
       let width = p.width;
       let height = p.height;
@@ -113,8 +145,6 @@ const setup = (measures,p, canvasParentRef) => {
           longArr.push([longX,longY]);
       }
       p.endShape();
-
-      console.log(longArr);
 
       const lastBitStart = {x:longArr[p.ceil(longArr.length-(longArr.length/3))][0],y:longArr[p.ceil(longArr.length-(longArr.length/3))][1]};
       const lastBitEnd = {x:width/6,y:height/3};

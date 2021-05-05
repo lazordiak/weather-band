@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { useRef, useState, useEffect } from 'react'
 import { setup, draw } from "./sketch2"
 import { useMeasure } from "react-use";
+import { motion } from 'framer-motion';
 const Sketch = dynamic(() => import("react-p5"), { ssr: false });
 
 const HomeContainer = styled.div`
@@ -344,8 +345,6 @@ export default function Home() {
   let measures = {width: width, height: height};
   var boundSetup = setup.bind(null,measures);
   console.log("width, height: ",width,height);
-  /*console.log("measures object",measures.width,measures.height);
-  console.log("bound stuff",boundSetup);*/
 
   return (
     
