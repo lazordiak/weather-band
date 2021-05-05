@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import styles from '../styles/Home.module.css'
 import styled from "styled-components"
 import { useRef, useState, useEffect } from 'react'
-import { setup, draw } from "./sketch2"
+import { setup, draw } from "../components/sketch2"
 import { useMeasure } from "react-use";
 import { motion } from 'framer-motion';
 const Sketch = dynamic(() => import("react-p5"), { ssr: false });
