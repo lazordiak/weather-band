@@ -2,6 +2,7 @@ import { Bezier } from "./bezier"
 
 const setup = (measures,p,canvasParentRef) => {
 
+  console.log(measures.intersector);
 
   //console.log(measures);
   //console.log(p,canvasParentRef);
@@ -41,16 +42,26 @@ const seasoner = (month) => {
 }
 
 const season = seasoner(month);
-let seasonColor;
+let topColor;
+let rightColor;
+let botColor;
 
 if (season == "winter") {
-    seasonColor = "#ebebec";
+    botColor = "#796E7B";
+    rightColor = "#8999D1";
+    topColor = "#D3D1D8";
 } else if (season == "summer") {
-    seasonColor = "#f1eae8";
+    topColor = "#E7DDD6";
+    rightColor = "#D36C55";
+    botColor = "#8D7C76";
 } else if (season == "autumn") {
-    seasonColor = "f5f1e9";
+    topColor = "#E6DCC7";
+    rightColor = "#DFA54B";
+    botColor = "#8B8688";
 } else {
-    seasonColor = "#ebede9";
+    topColor = "#D4D3CF";
+    rightColor = "#97A97D";
+    botColor = "#9899A3";
 }
 
   const CalculateMidpoint = (start,end) => {
@@ -169,7 +180,7 @@ if (season == "winter") {
       p.endShape();
 
       p.noStroke();
-      p.fill(218,163,78);
+      p.fill(rightColor);
       p.ellipse(topStartPoint.x,topStartPoint.y,20,20);
       p.ellipse(topEndPoint.x,topEndPoint.y,80,80);
       
@@ -182,6 +193,8 @@ if (season == "winter") {
       p.curveVertex(topBitEnd.x-10,topBitEnd.y-5);
       p.curveVertex(topBitEnd.x-20,topBitEnd.y)
       p.endShape();
+
+      p.fill(botColor);
       
       p.beginShape();
       p.curveVertex(longX,longY);
@@ -194,6 +207,8 @@ if (season == "winter") {
       p.curveVertex(longX,longY);
       p.curveVertex(longX,longY);
       p.endShape();
+
+      p.fill(topColor);
       
       p.beginShape();
       p.curveVertex(lastBitEnd.x,lastBitEnd.y);

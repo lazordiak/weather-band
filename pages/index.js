@@ -342,7 +342,7 @@ export default function Home() {
   const intersection = useOnScreen(theRefs,options);
 
   const [canvasRef, {width, height}] = useMeasure();
-  let measures = {width: width, height: height};
+  let measures = {width: width, height: height, intersector: intersection};
   var boundSetup = setup.bind(null,measures);
   console.log("width, height: ",width,height);
 
